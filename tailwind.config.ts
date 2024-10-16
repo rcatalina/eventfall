@@ -4,8 +4,10 @@ import {
   black,
   brilliantRose,
   eggplant,
+  garnet,
   mountbattenPink,
   murrey,
+  oldRose,
   white,
 } from "./app/_theme/colors";
 
@@ -32,7 +34,7 @@ const config: Config = {
         light: {
           layout: {}, // light theme layout tokens
           colors: {
-            background: white,
+            background: oldRose[900],
             foreground: black,
             primary: brilliantRose,
             secondary: mountbattenPink,
@@ -41,7 +43,7 @@ const config: Config = {
         dark: {
           layout: {}, // dark theme layout tokens
           colors: {
-            background: black,
+            background: garnet[100],
             foreground: white,
             primary: murrey,
             secondary: eggplant,

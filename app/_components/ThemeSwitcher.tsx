@@ -1,11 +1,15 @@
 "use client";
 
+import { Icon } from "@iconify-icon/react";
+import { Button } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import CustomTooltip from "./CustomTooltip";
 
-export function ThemeSwitcher() {
+export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const isLight = "light" === theme;
 
   useEffect(() => {
     setMounted(true);
@@ -14,10 +18,21 @@ export function ThemeSwitcher() {
   if (!mounted) return null;
 
   return (
-    <div>
-      The current theme is: {theme}
-      <button onClick={() => setTheme("light")}>Light Mode</button>
-      <button onClick={() => setTheme("dark")}>Dark Mode</button>
-    </div>
+    <CustomTooltip
+      content={`${isLight ? "Switch to dark theme" : "Switch to light theme"}`}
+    >
+      <Button
+        isIconOnly
+        color="default"
+        variant="faded"
+        aria-label="Switch theme"
+        onClick={() => setTheme(isLight ? "dark" : "light")}
+      >
+        <Icon
+          icon={`${isLight ? "mdi:moon-and-stars" : "mdi:white-balance-sunny"}`}
+          className="text-2xl"
+        />
+      </Button>
+    </CustomTooltip>
   );
 }

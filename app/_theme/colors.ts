@@ -1,8 +1,8 @@
 import { ColorScale } from "@nextui-org/theme";
 
 // neutral
-export const white: ColorScale = "#ffffff";
-export const black: ColorScale = "#1b1b1b";
+export const white: string = "#ffffff";
+export const black: string = "#1b1b1b";
 
 // light theme
 export const oldRose: ColorScale = {
