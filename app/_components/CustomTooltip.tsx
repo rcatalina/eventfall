@@ -6,9 +6,11 @@ export default function CustomTooltip({
   children,
   ...rest
 }: PropsWithChildren<TooltipProps>) {
-  // props we want to override to be the new defaults
-  const customProps: TooltipProps = { color: "foreground" };
-  const finalProps: TooltipProps = merge(customProps, rest);
+  const defaultProps: TooltipProps = {
+    color: "foreground",
+    delay: 400,
+  }; // props we want to override to be the custom defaults
+  const finalProps: TooltipProps = merge({}, defaultProps, rest);
 
   return <Tooltip {...finalProps}>{children}</Tooltip>;
 }

@@ -4,7 +4,7 @@ import { Icon } from "@iconify-icon/react";
 import { Button } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import CustomTooltip from "./CustomTooltip";
+import CustomTooltip from "../CustomTooltip";
 
 export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -31,6 +31,7 @@ export default function ThemeSwitcher() {
         <Icon
           icon={`${isLight ? "mdi:moon-and-stars" : "mdi:white-balance-sunny"}`}
           className="text-2xl"
+          data-testid="theme-switcher-icon"
         />
       </Button>
     </CustomTooltip>
