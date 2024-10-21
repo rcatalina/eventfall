@@ -6,6 +6,11 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import CustomTooltip from "../CustomTooltip";
 
+/**
+ * This component represents a button that allows users to toggle between light and dark themes in the application.
+ * It utilizes the `useTheme` hook from `next-themes` to access the current resolved theme and set the theme to either
+ * 'light' or 'dark' based on the user's preference.
+ */
 export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
