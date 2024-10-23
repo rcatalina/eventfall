@@ -1,4 +1,4 @@
-import { renderWithThemeContext } from "@/app/_lib/test-utils";
+import { renderWithThemeContext } from "@/_lib/utils/test-utils";
 import {
   afterEach,
   beforeAll,
@@ -7,10 +7,15 @@ import {
   it,
   jest,
 } from "@jest/globals";
-import { cleanup, render, screen } from "@testing-library/react";
+import {
+  act,
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useTheme } from "next-themes";
-import ThemeSwitcher from "./ThemeSwitcher";
+import ThemeSwitcher from "./theme-switcher";
 
 type ThemeVariant = "light" | "dark" | "system";
 
@@ -33,9 +38,9 @@ const setupWithTheme = (theme: ThemeVariant | undefined = "dark") => {
   return { toggleButton, spy };
 };
 
-let localStorageMock: { [key: string]: string } = {};
-
 describe("ThemeSwitcher", () => {
+  let localStorageMock: { [key: string]: string } = {};
+
   beforeAll(() => {
     // Create a mock of the window.matchMedia function
     global.matchMedia = jest.fn(
@@ -62,8 +67,26 @@ describe("ThemeSwitcher", () => {
 
   afterEach(() => {
     jest.useRealTimers(); // Revert to real timers, in case some test used the built-in useFakeTimers
-    cleanup(); // React trees cleanup
     localStorageMock = {}; // Clear the localStorage mock
+  });
+
+  it("renders a tooltip when focused", async () => {
+    jest.useFakeTimers(); // Fake timers to speed up the test, since there's a delay before the tooltip appears/disappears
+    render(<ThemeSwitcher />);
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    const toggleButton = screen.getByLabelText("Switch theme");
+
+    // appears on focus
+    act(() => {
+      toggleButton.focus();
+    });
+    expect(await screen.findByRole("tooltip")).toBeInTheDocument();
+
+    // disappears on blur
+    act(() => {
+      toggleButton.blur();
+    });
+    await waitForElementToBeRemoved(() => screen.queryByRole("tooltip"));
   });
 
   describe("(light theme)", () => {
@@ -78,6 +101,15 @@ describe("ThemeSwitcher", () => {
       const user = userEvent.setup();
       const { toggleButton, spy } = setupWithTheme("light");
       await user.click(toggleButton);
+      expect(spy).toHaveTextContent("dark");
+    });
+    it("changes the theme when focused and user presses ENTER", async () => {
+      const user = userEvent.setup();
+      const { toggleButton, spy } = setupWithTheme("light");
+      act(() => {
+        toggleButton.focus();
+      });
+      await user.keyboard("{Enter}");
       expect(spy).toHaveTextContent("dark");
     });
   });
@@ -96,17 +128,14 @@ describe("ThemeSwitcher", () => {
       await user.click(toggleButton);
       expect(spy).toHaveTextContent("light");
     });
-  });
-
-  it("renders a tooltip when hovered", async () => {
-    jest.useFakeTimers(); // We use fake timers to speed up the test, since there's a delay before the tooltip appears
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-    render(<ThemeSwitcher />);
-    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
-    const toggleButton = screen.getByLabelText("Switch theme");
-    await user.hover(toggleButton);
-    const tooltip = await screen.findByRole("tooltip");
-    expect(tooltip).toBeInTheDocument();
-    expect(tooltip).toHaveClass("before:bg-foreground");
+    it("changes the theme when focused and user presses ENTER", async () => {
+      const user = userEvent.setup();
+      const { toggleButton, spy } = setupWithTheme("dark");
+      act(() => {
+        toggleButton.focus();
+      });
+      await user.keyboard("{Enter}");
+      expect(spy).toHaveTextContent("light");
+    });
   });
 });

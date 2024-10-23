@@ -9,7 +9,7 @@ import {
   murrey,
   oldRose,
   white,
-} from "./app/_theme/colors";
+} from "./app/_lib/theme/colors";
 
 const config: Config = {
   content: [
@@ -20,7 +20,12 @@ const config: Config = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      // fontFamily: {
+      //   sans: ["var(--font-geist-sans)"],
+      //   mono: ["var(--font-geist-mono)"],
+      // },
+    },
   },
   darkMode: "class",
   plugins: [

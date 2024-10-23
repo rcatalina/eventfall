@@ -4,7 +4,7 @@ import { Icon } from "@iconify-icon/react";
 import { Button } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import CustomTooltip from "../CustomTooltip";
+import CustomTooltip from "../custom-tooltip/custom-tooltip";
 
 /**
  * This component represents a button that allows users to toggle between light and dark themes in the application.
@@ -24,17 +24,17 @@ export default function ThemeSwitcher() {
 
   return (
     <CustomTooltip
-      content={`${isLight ? "Switch to dark theme" : "Switch to light theme"}`}
+      content={isLight ? "Switch to dark theme" : "Switch to light theme"}
     >
       <Button
         isIconOnly
         color="default"
-        variant="faded"
+        variant="flat"
         aria-label="Switch theme"
-        onClick={() => setTheme(isLight ? "dark" : "light")}
+        onPress={() => setTheme(isLight ? "dark" : "light")} // since onClick is deprecated: https://nextui.org/docs/components/button#button-events (onClick doesn't work when pressing the ENTER key)
       >
         <Icon
-          icon={`${isLight ? "mdi:moon-and-stars" : "mdi:white-balance-sunny"}`}
+          icon={isLight ? "mdi:moon-and-stars" : "mdi:white-balance-sunny"}
           className="text-2xl"
           data-testid="theme-switcher-icon"
         />
