@@ -28,12 +28,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="bg-background text-foreground"
+      className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
       suppressHydrationWarning
     >
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="font-sans">
         <Providers>
           <CustomNavbar />
           {children}
