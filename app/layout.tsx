@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import React from "react";
 import { CustomNavbar } from "./_components/custom-navbar";
 import { Providers } from "./_components/providers";
 import "./globals.css";
 
 const geistSans = localFont({
-  src: "./_assets/fonts/GeistVF.woff",
+  src: "../public/fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
 const geistMono = localFont({
-  src: "./_assets/fonts/GeistMonoVF.woff",
+  src: "../public/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
+  weight: "100 900",
+});
+const fraunces = localFont({
+  src: "../public/fonts/Fraunces.ttf",
+  variable: "--font-fraunces",
+  weight: "100 900",
+});
+const frauncesItalic = localFont({
+  src: "../public/fonts/FrauncesItalic.ttf",
+  variable: "--font-fraunces-italic",
   weight: "100 900",
 });
 
@@ -28,14 +39,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${frauncesItalic.variable} bg-background text-foreground antialiased`}
       suppressHydrationWarning
     >
       <body className="font-sans">
-        <Providers>
-          <CustomNavbar />
-          {children}
-        </Providers>
+        <React.StrictMode>
+          <Providers>
+            <CustomNavbar />
+            {children}
+          </Providers>
+        </React.StrictMode>
       </body>
     </html>
   );

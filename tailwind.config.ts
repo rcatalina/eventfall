@@ -3,11 +3,11 @@ import type { Config } from "tailwindcss";
 import {
   black,
   brilliantRose,
-  eggplant,
   garnet,
-  mountbattenPink,
+  jordyBlue,
   murrey,
   oldRose,
+  ultraViolet,
   white,
 } from "./app/_lib/theme/colors";
 
@@ -23,6 +23,8 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-geist-sans)"],
         mono: ["var(--font-geist-mono)"],
+        serif: ["var(--font-fraunces)"],
+        "serif-italic": ["var(--font-fraunces-italic)"],
       },
     },
   },
@@ -38,19 +40,19 @@ const config: Config = {
         light: {
           layout: {}, // light theme layout tokens
           colors: {
-            background: oldRose[900],
+            background: oldRose[100],
             foreground: black,
             primary: brilliantRose,
-            secondary: mountbattenPink,
+            secondary: jordyBlue,
           }, // light theme colors
         },
         dark: {
           layout: {}, // dark theme layout tokens
           colors: {
-            background: garnet[100],
+            background: garnet[900],
             foreground: white,
             primary: murrey,
-            secondary: eggplant,
+            secondary: ultraViolet,
           }, // dark theme colors
         },
         // ... custom themes
